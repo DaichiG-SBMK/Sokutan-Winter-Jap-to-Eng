@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>速単冬休み範囲【日⇒英】</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 10px;
+      line-height: 1.6;
+      background: #fafafa;
+    }
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 5px;
+    }
+    #description {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 10px;
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 8px 10px;
+      border: 1px solid #eee;
+    }
+    #controls {
+      margin-bottom: 15px;
+    }
+    button {
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+    }
+    /* ランダム15問テストボタン：落ち着いた青系 */
+    #random15Btn {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #4a90e2;
+      margin-right: 6px;
+      margin-bottom: 6px;
+      color: #17446f;
+      background: #e7f1ff;
+      font-weight: 600;
+    }
+    #random15Btn:hover {
+      background: #d6e8ff;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+      transform: translateY(-1px);
+    }
+
+    /* ランダム50問テストボタン：少し濃いめのブルー系 */
+    #random50Btn {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #2c82c9;
+      margin-right: 6px;
+      margin-bottom: 6px;
+      color: #0f3553;
+      background: #d9ecff;
+      font-weight: 600;
+    }
+    #random50Btn:hover {
+      background: #c7e1ff;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+      transform: translateY(-1px);
+    }
+
+    /* MAX数：やる気スイッチ感のあるオレンジ系 */
+    #maxSetBtn {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #f39c12;
+      margin-right: 6px;
+      margin-bottom: 6px;
+      color: #8a4b00;
+      background: #fff4e0;
+      font-weight: 700;
+    }
+    #maxSetBtn:hover {
+      background: #ffe3b8;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+      transform: translateY(-1px);
+    }
+
+    /* 再チャレンジ系：控えめグレー系 */
+    #retryLastBtn,
+    #retryTopBtn {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #bbb;
+      margin-right: 6px;
+      margin-bottom: 6px;
+      color: #444;
+      background: #f5f5f5;
+    }
+    #retryLastBtn:hover,
+    #retryTopBtn:hover {
+      background: #ececec;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+      transform: translateY(-1px);
+    }
+
+    /* 学習記録ボタン：少し緑がかった補助ボタン */
+    #showLogBtn {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #44a08d;
+      margin-right: 6px;
+      margin-bottom: 6px;
+      color: #205246;
+      background: #e6f4f1;
+    }
+    #showLogBtn:hover {
+      background: #d5ece7;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+      transform: translateY(-1px);
+    }
+
+    #status {
+      font-size: 0.8rem;
+      color: #555;
+      margin-left: 4px;
+    }
+
+    #quiz {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 10px;
+      border: 1px solid #eee;
+    }
+    #question {
+      margin: 15px 0;
+      font-weight: bold;
+    }
+    #choices button {
+      display: block;
+      width: 100%;
+      margin: 4px 0;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      text-align: left;
+      background: #fff;
+    }
+    #choices button:hover:not(:disabled) {
+      background: #f7faff;
+    }
+    #choices button:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+    #feedback {
+      margin-top: 8px;
+      font-weight: bold;
+    }
+    #nextBtn {
+      margin-top: 12px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid #bbb;
+      background: #f8f8f8;
+      font-size: 0.85rem;
+    }
+    #nextBtn:hover:not(:disabled) {
+      background: #efefef;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+      transform: translateY(-1px);
+    }
+    #nextBtn:disabled {
+      opacity: 0.4;
+      cursor: default;
+      box-shadow: none;
+      transform: none;
+    }
+    #score {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+    #summary {
+      margin-top: 20px;
+      padding-top: 10px;
+      border-top: 1px solid #ddd;
+      font-size: 0.95rem;
+    }
+    #summary h2 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+    #log {
+      margin-top: 20px;
+      padding-top: 10px;
+      border-top: 1px solid #ddd;
+      font-size: 0.95rem;
+    }
+    #log h2 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>速単冬休み範囲【日⇒英】</h1>
+  <div id="description">
+    ・どの通常テストでも、間違えた単語は「この端末の学習記録」に加算されます。<br>
+    ・「前回のテストで間違えた問題に再チャレンジ」「累計で間違いが多い語に再チャレンジ」での誤答は、<br>
+    　<strong>この端末の学習記録には加算されません。</strong><br>
+  </div>
+
+  <div id="controls">
+    <button id="random15Btn">ランダム15問テスト</button>
+    <button id="random50Btn">ランダム50問テスト</button>
+    <button id="maxSetBtn">MAX数にチャレンジ</button>
+    <button id="retryLastBtn">前回のテストで間違えた問題に再チャレンジ</button>
+    <button id="retryTopBtn">累計で間違いが多い語に再チャレンジ</button>
+    <button id="showLogBtn">この端末の学習記録</button>
+    <span id="status"></span>
+  </div>
+
+  <div id="quiz">
+    <div id="question">単語リストを読み込んでいます...</div>
+    <div id="choices"></div>
+    <div id="feedback"></div>
+    <button id="nextBtn" disabled>次の問題へ</button>
+    <div id="score"></div>
+  </div>
+
+  <div id="summary"></div>
+  <div id="log"></div>
+
+  <script>
+    const LABELS = ['ア', 'イ', 'ウ', 'エ'];
+    const STORAGE_KEY = 'vocabQuizStats_v1';
+
+    // mode: 'normal15' / 'normal50' / 'normalMax' / 'retryLast' / 'retryTop'
+    let currentMode = 'normal15';
+
+    let words = [];          // {id, eng, jp, pos}
+    let quizQuestions = [];
+    let current = 0;
+    let correctCount = 0;
+    let incorrectList = [];      // この回での誤答（{eng,jp,pos}）
+    let lastIncorrectMain = [];  // 直近の「通常テスト（15/50 or MAX）」での誤答
+    let stats = {};              // { [english]: { jp, pos, wrong } }
+
+    // シャッフル
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    // 学習記録読み込み
+    function loadStats() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          stats = {};
+        } else {
+          stats = JSON.parse(raw);
+          if (typeof stats !== 'object' || stats === null) {
+            stats = {};
+          }
+        }
+      } catch (e) {
+        console.warn('学習記録の読み込みに失敗しました。初期化します。', e);
+        stats = {};
+      }
+    }
+
+    // 学習記録保存
+    function saveStats() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
+      } catch (e) {
+        console.warn('学習記録の保存に失敗しました。', e);
+      }
+    }
+
+    // 誤答を学習記録に追加（通常テストのみ）
+    function recordWrongAnswer(questionObj) {
+      // key は英単語（eng）で管理
+      const key = questionObj.eng || questionObj.questionText;
+      if (!key) return;
+
+      // words から日本語・品詞を再取得（安全のため）
+      const base =
+        words.find(w => w.eng === key) ||
+        words.find(w => w.jp === questionObj.displayQuestion);
+
+      if (!stats[key]) {
+        stats[key] = {
+          jp: base ? base.jp : '',
+          pos: base ? base.pos : (questionObj.pos || ''),
+          wrong: 0
+        };
+      }
+      if (base) {
+        stats[key].jp = base.jp;
+        stats[key].pos = base.pos;
+      }
+      stats[key].wrong += 1;
+      saveStats();
+    }
+
+    // CSV読み込み
+    async function loadWords() {
+      const status = document.getElementById('status');
+      try {
+        loadStats();
+
+        const res = await fetch('words.csv');
+        const text = await res.text();
+
+        const lines = text.trim().split('\n');
+        for (let i = 1; i < lines.length; i++) {
+          const cols = lines[i].split(',');
+          if (cols.length < 4) continue;
+          const [id, eng, jp, pos] = cols.map(c => c.trim());
+          if (!eng || !jp || !pos) continue;
+          words.push({ id, eng, jp, pos });
+        }
+
+        if (words.length < 4) {
+          document.getElementById('question').textContent =
+            `単語が4個未満です（現在 ${words.length}個）。4択問題を作るには少なくとも4語必要です。`;
+          status.textContent = '';
+          return;
+        }
+
+        status.textContent = `単語数：${words.length}件 読み込み完了`;
+        updateButtonsByCapacity(); // ← ランダム50／MAXボタンの表示更新
+        generateRandomTest(15);    // 初回は15問テスト
+      } catch (e) {
+        console.error(e);
+        document.getElementById('question').textContent =
+          'words.csv を読み込めませんでした。ファイル名と場所を確認してください。';
+        document.getElementById('status').textContent = '読み込みエラー';
+      }
+    }
+
+    // 品詞ごとにグルーピング
+    function groupByPos() {
+      const byPos = {};
+      for (const w of words) {
+        if (!byPos[w.pos]) byPos[w.pos] = [];
+        byPos[w.pos].push(w);
+      }
+      return byPos;
+    }
+
+    // 最大作成数に応じて、「ランダム50」「MAX」のボタン表示を制御
+    function updateButtonsByCapacity() {
+      const maxBtn = document.getElementById('maxSetBtn');
+      const random50Btn = document.getElementById('random50Btn');
+
+      if (!words || words.length === 0) {
+        random50Btn.style.display = 'none';
+        maxBtn.style.display = 'none';
+        return;
+      }
+
+      const byPos = groupByPos();
+      let total = 0;
+      for (const pos of Object.keys(byPos)) {
+        const cap = Math.floor(byPos[pos].length / 4); // その品詞から作れる最大数
+        if (cap > 0) total += cap;
+      }
+
+      // ランダム50問テスト：最大数が 75問以上のときだけ表示
+      if (total >= 75) {
+        random50Btn.style.display = 'inline-block';
+      } else {
+        random50Btn.style.display = 'none';
+      }
+
+      // MAX数：最大数が 30問以上のときだけ表示
+      if (total >= 30) {
+        maxBtn.style.display = 'inline-block';
+        maxBtn.textContent = `MAX数（${total}問）にチャレンジ`;
+      } else {
+        maxBtn.style.display = 'none';
+      }
+    }
+
+    // ランダム15/50問テスト用の共通関数（target 問）
+    function generateRandomTest(target) {
+      const status = document.getElementById('status');
+      const summaryDiv = document.getElementById('summary');
+      summaryDiv.innerHTML = '';
+      incorrectList = [];
+
+      const byPos = groupByPos();
+      const posList = Object.keys(byPos);
+      if (posList.length === 0) {
+        document.getElementById('question').textContent =
+          '品詞情報がありません。pos 列を確認してください。';
+        return;
+      }
+
+      const totalWords = words.length;
+      const capacityByPos = {};
+      let totalCapacity = 0;
+
+      for (const pos of posList) {
+        const count = byPos[pos].length;
+        const cap = Math.floor(count / 4);
+        if (cap > 0) {
+          capacityByPos[pos] = cap;
+          totalCapacity += cap;
+        } else {
+          capacityByPos[pos] = 0;
+        }
+      }
+
+      if (totalCapacity === 0) {
+        document.getElementById('question').textContent =
+          'どの品詞も4語未満のため、問題を作成できません。';
+        return;
+      }
+
+      const targetTotal = Math.min(target, totalCapacity);
+
+      const desiredByPos = {};
+      const fracByPos = {};
+      let sumDesired = 0;
+
+      for (const pos of posList) {
+        const count = byPos[pos].length;
+        if (capacityByPos[pos] === 0) {
+          desiredByPos[pos] = 0;
+          fracByPos[pos] = 0;
+          continue;
+        }
+        const raw = targetTotal * (count / totalWords);
+        let base = Math.floor(raw);
+        if (base > capacityByPos[pos]) base = capacityByPos[pos];
+        desiredByPos[pos] = base;
+        fracByPos[pos] = raw - base;
+        sumDesired += base;
+      }
+
+      let remaining = targetTotal - sumDesired;
+
+      if (remaining > 0) {
+        const order = [...posList].sort((a, b) => fracByPos[b] - fracByPos[a]);
+        while (remaining > 0) {
+          let assigned = false;
+          for (const pos of order) {
+            if (remaining <= 0) break;
+            if (capacityByPos[pos] > desiredByPos[pos]) {
+              desiredByPos[pos]++;
+              remaining--;
+              assigned = true;
+            }
+          }
+          if (!assigned) break;
+        }
+      }
+
+      let totalQuestions = 0;
+      for (const pos of posList) {
+        if (desiredByPos[pos] > capacityByPos[pos]) {
+          desiredByPos[pos] = capacityByPos[pos];
+        }
+        totalQuestions += desiredByPos[pos];
+      }
+      if (totalQuestions === 0) {
+        document.getElementById('question').textContent =
+          '問題数の割り振りに失敗しました。単語数と品詞のバランスを確認してください。';
+        return;
+      }
+
+      const questionWordsByPos = {};
+      const distractorsByPos = {};
+      let finalTotalQuestions = 0;
+
+      for (const pos of posList) {
+        const needed = desiredByPos[pos];
+        if (needed <= 0) continue;
+
+        const list = [...byPos[pos]];
+        shuffle(list);
+
+        const qWords = list.slice(0, needed);
+        const dWords = list.slice(needed);
+
+        if (dWords.length < needed * 3) {
+          console.warn(`品詞 ${pos} で誤答用が不足しました。`);
+          continue;
+        }
+
+        questionWordsByPos[pos] = qWords;
+        distractorsByPos[pos] = dWords;
+        finalTotalQuestions += needed;
+      }
+
+      if (finalTotalQuestions === 0) {
+        document.getElementById('question').textContent =
+          '問題を作成できませんでした。単語数や品詞を確認してください。';
+        return;
+      }
+
+      const distractorPoolByPos = {};
+      const poolIndexByPos = {};
+      for (const pos of Object.keys(distractorsByPos)) {
+        const pool = [...distractorsByPos[pos]];
+        shuffle(pool);
+        distractorPoolByPos[pos] = pool;
+        poolIndexByPos[pos] = 0;
+      }
+
+      quizQuestions = [];
+
+      for (const pos of Object.keys(questionWordsByPos)) {
+        const qWords = questionWordsByPos[pos];
+        const pool = distractorPoolByPos[pos];
+        let poolIndex = poolIndexByPos[pos];
+
+        for (const qWord of qWords) {
+          if (poolIndex + 3 > pool.length) break;
+
+          const wrongWords = pool.slice(poolIndex, poolIndex + 3);
+          poolIndex += 3;
+
+          // 問題：日本語、選択肢：英語
+          let options = [
+            { text: qWord.eng, isCorrect: true },
+            ...wrongWords.map(w => ({ text: w.eng, isCorrect: false }))
+          ];
+          shuffle(options);
+
+          quizQuestions.push({
+            // 内部キーとしての英単語
+            questionText: qWord.eng,
+            // 画面に表示する日本語
+            displayQuestion: qWord.jp,
+            eng: qWord.eng,
+            jp: qWord.jp,
+            pos,
+            options
+          });
+        }
+
+        poolIndexByPos[pos] = poolIndex;
+      }
+
+      shuffle(quizQuestions);
+
+      current = 0;
+      correctCount = 0;
+
+      const posSummary = Object.keys(questionWordsByPos)
+        .map(pos => `${pos}:${questionWordsByPos[pos].length}問`)
+        .join(' / ');
+
+      const label = target === 15 ? 'ランダム15問' : 'ランダム50問';
+      status.textContent =
+        `【${label}】 単語数：${words.length}件 / 今回の問題：${quizQuestions.length}問（${posSummary}）`;
+
+      showQuestion();
+    }
+
+    // MAX数にチャレンジ（各品詞ごとに floor(N_pos/4) 問）
+    function generateMaxSet() {
+      currentMode = 'normalMax';
+
+      const status = document.getElementById('status');
+      const summaryDiv = document.getElementById('summary');
+      summaryDiv.innerHTML = '';
+      incorrectList = [];
+
+      const byPos = groupByPos();
+      const posList = Object.keys(byPos);
+      if (posList.length === 0) {
+        document.getElementById('question').textContent =
+          '品詞情報がありません。pos 列を確認してください。';
+        return;
+      }
+
+      const questionWordsByPos = {};
+      const distractorsByPos = {};
+      let totalQuestions = 0;
+
+      for (const pos of posList) {
+        const list = [...byPos[pos]];
+        shuffle(list);
+
+        const n = list.length;
+        const qCount = Math.floor(n / 4);
+        if (qCount <= 0) continue;
+
+        const qWords = list.slice(0, qCount);
+        const dWords = list.slice(qCount);
+
+        if (dWords.length < qCount * 3) {
+          console.warn(`品詞 ${pos} で誤答用が不足しています。`);
+          continue;
+        }
+
+        questionWordsByPos[pos] = qWords;
+        distractorsByPos[pos] = dWords;
+        totalQuestions += qCount;
+      }
+
+      if (totalQuestions === 0) {
+        document.getElementById('question').textContent =
+          'どの品詞も4語未満のため、問題を作成できません。';
+        return;
+      }
+
+      const distractorPoolByPos = {};
+      const poolIndexByPos = {};
+      for (const pos of Object.keys(distractorsByPos)) {
+        const pool = [...distractorsByPos[pos]];
+        shuffle(pool);
+        distractorPoolByPos[pos] = pool;
+        poolIndexByPos[pos] = 0;
+      }
+
+      quizQuestions = [];
+
+      for (const pos of Object.keys(questionWordsByPos)) {
+        const qWords = questionWordsByPos[pos];
+        const pool = distractorPoolByPos[pos];
+        let poolIndex = poolIndexByPos[pos];
+
+        for (const qWord of qWords) {
+          if (poolIndex + 3 > pool.length) break;
+
+          const wrongWords = pool.slice(poolIndex, poolIndex + 3);
+          poolIndex += 3;
+
+          let options = [
+            { text: qWord.eng, isCorrect: true },
+            ...wrongWords.map(w => ({ text: w.eng, isCorrect: false }))
+          ];
+          shuffle(options);
+
+          quizQuestions.push({
+            questionText: qWord.eng,
+            displayQuestion: qWord.jp,
+            eng: qWord.eng,
+            jp: qWord.jp,
+            pos,
+            options
+          });
+        }
+
+        poolIndexByPos[pos] = poolIndex;
+      }
+
+      shuffle(quizQuestions);
+
+      current = 0;
+      correctCount = 0;
+
+      const posSummary = Object.keys(questionWordsByPos)
+        .map(pos => `${pos}:${questionWordsByPos[pos].length}問`)
+        .join(' / ');
+
+      status.textContent =
+        `【MAX数にチャレンジ】 単語数：${words.length}件 / 今回の問題：${quizQuestions.length}問（${posSummary}）`;
+
+      showQuestion();
+    }
+
+    // 前回のテストで間違えた問題に再チャレンジ
+    function generateRetryFromLast() {
+      currentMode = 'retryLast';
+
+      const status = document.getElementById('status');
+      const summaryDiv = document.getElementById('summary');
+      summaryDiv.innerHTML = '';
+      incorrectList = [];
+
+      if (!lastIncorrectMain || lastIncorrectMain.length === 0) {
+        document.getElementById('question').textContent =
+          '前回の通常テスト（15問／50問／MAX）の誤答がありません。先に通常テストを解いてください。';
+        document.getElementById('choices').innerHTML = '';
+        document.getElementById('feedback').textContent = '';
+        document.getElementById('nextBtn').disabled = true;
+        document.getElementById('score').textContent = '';
+        return;
+      }
+
+      const questions = [];
+
+      for (const item of lastIncorrectMain) {
+        const base =
+          words.find(w => w.eng === item.eng && (w.pos === item.pos || !item.pos)) ||
+          words.find(w => w.eng === item.eng);
+
+        if (!base) continue;
+
+        const pos = base.pos;
+        const candidates = words.filter(w => w.pos === pos && w.eng !== base.eng);
+        if (candidates.length < 3) continue;
+
+        const shuffled = [...candidates];
+        shuffle(shuffled);
+        const wrongWords = shuffled.slice(0, 3);
+
+        let options = [
+          { text: base.eng, isCorrect: true },
+          ...wrongWords.map(w => ({ text: w.eng, isCorrect: false }))
+        ];
+        shuffle(options);
+
+        questions.push({
+          questionText: base.eng,
+          displayQuestion: base.jp,
+          eng: base.eng,
+          jp: base.jp,
+          pos,
+          options
+        });
+      }
+
+      if (questions.length === 0) {
+        document.getElementById('question').textContent =
+          '前回の誤答から、十分な誤答選択肢を用意できませんでした。';
+        document.getElementById('choices').innerHTML = '';
+        document.getElementById('feedback').textContent = '';
+        document.getElementById('nextBtn').disabled = true;
+        document.getElementById('score').textContent = '';
+        return;
+      }
+
+      shuffle(questions);
+      quizQuestions = questions;
+      current = 0;
+      correctCount = 0;
+
+      status.textContent =
+        `【再チャレンジ：前回の誤答】 出題数：${quizQuestions.length}問（このモードでの誤答は学習記録に加算されません）`;
+
+      showQuestion();
+    }
+
+    // 累計で間違いが多い語に再チャレンジ（上位30語）
+    function generateRetryFromTop() {
+      currentMode = 'retryTop';
+
+      const status = document.getElementById('status');
+      const summaryDiv = document.getElementById('summary');
+      summaryDiv.innerHTML = '';
+      incorrectList = [];
+
+      loadStats();
+      const entries = Object.entries(stats)
+        .filter(([eng, data]) => (data.wrong || 0) > 0);
+
+      if (entries.length === 0) {
+        document.getElementById('question').textContent =
+          '学習記録に誤答の記録がありません。先に通常テストを解いてください。';
+        document.getElementById('choices').innerHTML = '';
+        document.getElementById('feedback').textContent = '';
+        document.getElementById('nextBtn').disabled = true;
+        document.getElementById('score').textContent = '';
+        return;
+      }
+
+      entries.sort((a, b) => {
+        const wa = a[1].wrong || 0;
+        const wb = b[1].wrong || 0;
+        if (wb !== wa) return wb - wa;
+        return a[0].localeCompare(b[0]);
+      });
+
+      const top = entries.slice(0, 30);
+      const questions = [];
+
+      for (const [eng, data] of top) {
+        const base =
+          words.find(w => w.eng === eng && (data.pos ? w.pos === data.pos : true)) ||
+          words.find(w => w.eng === eng);
+
+        if (!base) continue;
+
+        const pos = base.pos;
+        const candidates = words.filter(w => w.pos === pos && w.eng !== base.eng);
+        if (candidates.length < 3) continue;
+
+        const shuffled = [...candidates];
+        shuffle(shuffled);
+        const wrongWords = shuffled.slice(0, 3);
+
+        let options = [
+          { text: base.eng, isCorrect: true },
+          ...wrongWords.map(w => ({ text: w.eng, isCorrect: false }))
+        ];
+        shuffle(options);
+
+        questions.push({
+          questionText: base.eng,
+          displayQuestion: base.jp,
+          eng: base.eng,
+          jp: base.jp,
+          pos,
+          options
+        });
+      }
+
+      if (questions.length === 0) {
+        document.getElementById('question').textContent =
+          '学習記録の単語から、十分な誤答選択肢を用意できませんでした。';
+        document.getElementById('choices').innerHTML = '';
+        document.getElementById('feedback').textContent = '';
+        document.getElementById('nextBtn').disabled = true;
+        document.getElementById('score').textContent = '';
+        return;
+      }
+
+      shuffle(questions);
+      quizQuestions = questions;
+      current = 0;
+      correctCount = 0;
+
+      status.textContent =
+        `【再チャレンジ：累計で間違いが多い語】 出題数：${quizQuestions.length}問（最大30問／このモードでの誤答は学習記録に加算されません）`;
+
+      showQuestion();
+    }
+
+    // 現在の問題を表示
+    function showQuestion() {
+      const qDiv = document.getElementById('question');
+      const cDiv = document.getElementById('choices');
+      const feedback = document.getElementById('feedback');
+      const nextBtn = document.getElementById('nextBtn');
+      const scoreDiv = document.getElementById('score');
+      const summaryDiv = document.getElementById('summary');
+
+      if (current < quizQuestions.length) {
+        summaryDiv.innerHTML = '';
+      }
+
+      if (quizQuestions.length === 0) {
+        qDiv.textContent = '問題がありません。';
+        cDiv.innerHTML = '';
+        feedback.textContent = '';
+        nextBtn.disabled = true;
+        return;
+      }
+
+      if (current >= quizQuestions.length) {
+        qDiv.textContent = 'おしまいです！';
+        cDiv.innerHTML = '';
+        feedback.textContent = '';
+        nextBtn.disabled = true;
+        scoreDiv.textContent = `結果：${quizQuestions.length}問中 ${correctCount}問正解`;
+        renderSummary();
+        return;
+      }
+
+      const q = quizQuestions[current];
+
+      qDiv.textContent = `第${current + 1}問： ${q.displayQuestion || q.questionText}`;
+      cDiv.innerHTML = '';
+      feedback.textContent = '';
+      nextBtn.disabled = true;
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.textContent = `${LABELS[idx]}．${opt.text}`;
+        btn.addEventListener('click', () => checkAnswer(idx));
+        cDiv.appendChild(btn);
+      });
+
+      scoreDiv.textContent =
+        `進行状況：${current} / ${quizQuestions.length}問中　正解 ${correctCount}問`;
+    }
+
+    // 解答チェック
+    function checkAnswer(selectedIndex) {
+      const q = quizQuestions[current];
+      const feedback = document.getElementById('feedback');
+      const nextBtn = document.getElementById('nextBtn');
+
+      const selected = q.options[selectedIndex];
+      const correctIndex = q.options.findIndex(o => o.isCorrect);
+      const correctOption = q.options[correctIndex];
+
+      if (selected.isCorrect) {
+        feedback.textContent = '正解！';
+        correctCount++;
+      } else {
+        feedback.textContent =
+          `不正解… 正解は ${LABELS[correctIndex]}：${correctOption.text} です。`;
+
+        incorrectList.push({
+          eng: q.eng,
+          jp: q.displayQuestion,
+          pos: q.pos
+        });
+
+        if (currentMode === 'normal15' || currentMode === 'normal50' || currentMode === 'normalMax') {
+          recordWrongAnswer(q);
+        }
+      }
+
+      document.querySelectorAll('#choices button').forEach(btn => {
+        btn.disabled = true;
+      });
+
+      nextBtn.disabled = false;
+
+      const scoreDiv = document.getElementById('score');
+      scoreDiv.textContent =
+        `進行状況：${current + 1} / ${quizQuestions.length}問中　正解 ${correctCount}問`;
+    }
+
+    // この回のまとめ表示
+    function renderSummary() {
+      const summaryDiv = document.getElementById('summary');
+
+      if (incorrectList.length === 0) {
+        let note = '';
+        if (currentMode === 'retryLast' || currentMode === 'retryTop') {
+          note = '<p>（このモードでの誤答は学習記録に加算されません）</p>';
+        }
+        summaryDiv.innerHTML =
+          `<h2>今回のまとめ</h2><p>全問正解でした。すばらしいです 🎉</p>${note}`;
+
+        if (currentMode === 'normal15' || currentMode === 'normal50' || currentMode === 'normalMax') {
+          lastIncorrectMain = [];
+        }
+        return;
+      }
+
+      let title =
+        (currentMode === 'normal15' || currentMode === 'normal50' || currentMode === 'normalMax')
+          ? '今回の間違えた問題'
+          : '今回の再チャレンジで間違えた問題';
+
+      let html = `<h2>${title}</h2>`;
+      html += '<p>日本語と正しい英単語をもう一度確認しましょう。</p>';
+      html += '<ol>';
+
+      incorrectList.forEach(item => {
+        html += `<li><strong>${item.jp}</strong> → ${item.eng}`;
+        if (item.pos) {
+          html += ` <span style="color:#777; font-size:0.85rem;">（品詞: ${item.pos}）</span>`;
+        }
+        html += '</li>';
+      });
+
+      html += '</ol>';
+
+      if (currentMode === 'retryLast' || currentMode === 'retryTop') {
+        html += '<p style="font-size:0.85rem; color:#777;">※ このモードでの誤答は「この端末の学習記録」には加算されません。</p>';
+      }
+
+      summaryDiv.innerHTML = html;
+
+      if (currentMode === 'normal15' || currentMode === 'normal50' || currentMode === 'normalMax') {
+        lastIncorrectMain = incorrectList.map(x => ({ ...x }));
+      }
+    }
+
+    // この端末の学習記録を表示
+    function showStatsOnPage() {
+      const logDiv = document.getElementById('log');
+      loadStats();
+
+      const entries = Object.entries(stats);
+      if (entries.length === 0) {
+        logDiv.innerHTML =
+          '<h2>この端末の学習記録</h2><p>まだ間違えた単語の記録がありません。</p>';
+        return;
+      }
+
+      entries.sort((a, b) => {
+        const wa = a[1].wrong || 0;
+        const wb = b[1].wrong || 0;
+        if (wb !== wa) return wb - wa;
+        return a[0].localeCompare(b[0]);
+      });
+
+      let html = '<h2>この端末の学習記録</h2>';
+      html += '<p>よく間違える単語から順に並んでいます。（再チャレンジモードでの誤答は含みません）</p>';
+      html += '<table style="width:100%; border-collapse:collapse; font-size:0.9rem;">';
+      html += '<thead><tr>' +
+              '<th style="border-bottom:1px solid #ccc; text-align:left;">英単語</th>' +
+              '<th style="border-bottom:1px solid #ccc; text-align:left;">日本語</th>' +
+              '<th style="border-bottom:1px solid #ccc; text-align:left;">品詞</th>' +
+              '<th style="border-bottom:1px solid #ccc; text-align:right;">誤答回数</th>' +
+              '</tr></thead><tbody>';
+
+      entries.forEach(([eng, data]) => {
+        html += '<tr>' +
+          `<td style="border-bottom:1px solid #eee; padding:2px 4px;">${eng}</td>` +
+          `<td style="border-bottom:1px solid #eee; padding:2px 4px;">${data.jp || ''}</td>` +
+          `<td style="border-bottom:1px solid #eee; padding:2px 4px;">${data.pos || ''}</td>` +
+          `<td style="border-bottom:1px solid #eee; padding:2px 4px; text-align:right;">${data.wrong || 0}</td>` +
+          '</tr>';
+      });
+
+      html += '</tbody></table>';
+      logDiv.innerHTML = html;
+    }
+
+    // イベント設定
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      current++;
+      showQuestion();
+    });
+
+    document.getElementById('random15Btn').addEventListener('click', () => {
+      currentMode = 'normal15';
+      generateRandomTest(15);
+    });
+
+    document.getElementById('random50Btn').addEventListener('click', () => {
+      currentMode = 'normal50';
+      generateRandomTest(50);
+    });
+
+    document.getElementById('maxSetBtn').addEventListener('click', () => {
+      generateMaxSet();
+    });
+
+    document.getElementById('retryLastBtn').addEventListener('click', () => {
+      generateRetryFromLast();
+    });
+
+    document.getElementById('retryTopBtn').addEventListener('click', () => {
+      generateRetryFromTop();
+    });
+
+    document.getElementById('showLogBtn').addEventListener('click', () => {
+      showStatsOnPage();
+    });
+
+    // ページ読み込み時にCSVを読み込む
+    loadWords();
+  </script>
+</body>
+</html>
