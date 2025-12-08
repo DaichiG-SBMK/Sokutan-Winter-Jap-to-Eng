@@ -377,14 +377,15 @@
         // document.title = finalTitle;
 
         // 2行目以降をデータとして読み込む（2行目はヘッダー行想定）
-        for (let i = 2; i < lines.length; i++) {
-          const cols = lines[i].split(',');
-          if (cols.length < 4) continue;
-          const [id, jp, eng, pos] = cols.map(c => c.trim());
-          if (!eng || !jp || !pos) continue;
-          words.push({ id, jp, eng, pos });
-        }
-
+for (let i = 2; i < lines.length; i++) {
+  const cols = lines[i].split(',');
+  if (cols.length < 4) continue;
+  // 2列目が eng, 3列目が jp
+  const [id, eng, jp, pos] = cols.map(c => c.trim());
+  if (!eng || !jp || !pos) continue;
+  // プロパティ名は jp, eng で正しく持たせる
+  words.push({ id, jp, eng, pos });
+}
         if (words.length < 4) {
           document.getElementById('question').textContent =
             `単語が4個未満です（現在 ${words.length}個）。4択問題を作るには少なくとも4語必要です。`;
